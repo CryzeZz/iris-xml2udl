@@ -6,7 +6,7 @@
   "publisher": "CryzeZz",
   "repository": {
     "type": "git",
-    "url": "https://github.com/CryzeZz/iris-xml2udl"
+    "url": "https://github.com/CryzeZz/iris-xml2udl.git"
   },
   "engines": {
     "vscode": "^1.74.0"
