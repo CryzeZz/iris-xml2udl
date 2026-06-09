@@ -1,0 +1,66 @@
+{
+  "name": "xml2udl",
+  "displayName": "iris xml2udl",
+  "description": "Parse InterSystems IRIS XML export files and preview as UDL (Universal Definition Language) format with syntax highlighting",
+  "version": "1.0.0",
+  "publisher": "CryzeZz",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CryzeZz/iris-xml2udl"
+  },
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "xml2udl.preview",
+        "title": "iris xml2udl preview",
+        "icon": "$(preview)"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "xml2udl.preview",
+          "when": "resourceExtname == .xml",
+          "group": "xml2udl"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "xml2udl.preview",
+          "when": "resourceExtname == .xml",
+          "group": "xml2udl"
+        }
+      ]
+    },
+    "views": {
+      "explorer": [
+        {
+          "id": "xml2udl.treeView",
+          "name": "iris xml2udl",
+          "contextualTitle": "iris xml2udl"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "C:\\Users\\zhang\\.workbuddy\\binaries\\node\\versions\\22.22.2\\node.exe ./node_modules/typescript/bin/tsc -p ./",
+    "compile": "C:\\Users\\zhang\\.workbuddy\\binaries\\node\\versions\\22.22.2\\node.exe ./node_modules/typescript/bin/tsc -p ./",
+    "watch": "C:\\Users\\zhang\\.workbuddy\\binaries\\node\\versions\\22.22.2\\node.exe ./node_modules/typescript/bin/tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@types/vscode": "^1.74.0",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "@xmldom/xmldom": "^0.8.10"
+  }
+}
