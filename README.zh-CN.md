@@ -9,7 +9,7 @@
 ## 功能特性
 
 - **右键菜单预览** — 在资源管理器或编辑器中右键任意 `.xml` 文件，选择 `iris xml2udl preview`
-- **树形视图侧边栏** — 解析结果显示在 `iris xml2udl` 面板中，按组件类型分组（Class、Property、Method、Query、Index、Trigger、Storage、XData、CSP、Routine、Project 等）
+- **树形视图侧边栏** — 解析结果显示在 `iris xml2udl` 面板中，按顶层类型分组（Class、CSP、Routine、Project 等）。每个 **Class** 条目可展开，查看其成员（Property、Method、Query、Index、Trigger、Storage、XData 等）
 - **虚拟文档** — 点击树节点后，UDL 内容以虚拟文档形式打开（`xml2udl-udl://` 协议），不写任何磁盘文件
 - **自动语法高亮** — 虚拟文档 URI 中附带文件扩展名（`.cls`、`.csp`、`.prj`、`.udl`），VS Code 自动匹配语言模式
 - **原生页签行为** — 单击打开预览页签（下次点击会覆盖），双击或再次点击同一项则固定页签，与 VS Code 内置资源管理器行为一致
