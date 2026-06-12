@@ -1640,21 +1640,27 @@ function readAsDataURL(files) {
 
 $(function () {
     var srcXml=[],srcXmlName=[],srcXmlHighlight='';
+
+    // i18n helper (safe fallback to Chinese)
+    function _t(key) {
+        return (window.I18N && window.I18N[window._LANG] && window.I18N[window._LANG][key]) || (window.I18N && window.I18N['zh'][key]) || key;
+    }
+
     $('#win').dialog({
         width: Math.min(1600, $(window).width() - 100),
         height: Math.min(800, $(window).width() - 50),
         modal: true,
         closed:true,
-        title: '原文',
+        title: _t('dialogTitle'),
         buttons: [
             {
-                text:'确定',
+                text: _t('btnOK'),
                 handler:function(){
                     showFileTree(srcXml);
                     $('#win').dialog('close');
                 }
             },{
-                text:'取消',
+                text: _t('btnCancel'),
                 handler:function(){
                     $('#win').dialog('close');
                 }
@@ -1781,7 +1787,7 @@ $(function () {
                 var text=$('#item-xml').text();
             }
 
-            $.messager.popover({ msg: '复制成功', type: 'success', timeout: 1000 });
+            $.messager.popover({ msg: _t('copySuccess'), type: 'success', timeout: 1000 });
             return text;
         }
     });
@@ -1847,7 +1853,7 @@ $(function () {
             srcXmlHighlight=highlightCode.value;
 
 
-            $('#win').dialog('open').dialog('setTitle',srcXmlName.join('+')+' - 原文').dialog('center');
+            $('#win').data('srcNames', srcXmlName).dialog('open').dialog('setTitle',srcXmlName.join('+')+_t('dialogTitlePfx')).dialog('center');
             $('#src').html(srcXmlHighlight);
             renderLineNumbers('#src');
             

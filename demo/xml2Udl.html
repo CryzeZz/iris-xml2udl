@@ -32,7 +32,76 @@
             }
         })();
     </script>
-    <!--hightlight.js-->
+
+    <!-- i18n: language strings and auto-detection -->
+    <script>
+    (function () {
+        var i18n = {
+            'zh': {
+                fileSel:      '选择/拖拽xml文件',
+                viewSource:   '查看xml文件原文',
+                dialogTitle:  '原文',
+                btnOK:       '确定',
+                btnCancel:    '取消',
+                copySuccess:  '复制成功',
+                dialogTitlePfx: ' - 原文',
+            },
+            'en': {
+                fileSel:      'Select / Drag XML file',
+                viewSource:    'View XML source',
+                dialogTitle:   'Source',
+                btnOK:         'OK',
+                btnCancel:     'Cancel',
+                copySuccess:   'Copied successfully',
+                dialogTitlePfx:' - Source',
+            }
+        };
+
+        // Detect browser language
+        var lang = (navigator.language || navigator.userLanguage || 'zh').toLowerCase();
+        lang = lang.startsWith('zh') ? 'zh' : 'en';
+
+        window.I18N = i18n;
+        window._LANG = lang;
+
+        function applyI18N() {
+            var t = i18n[window._LANG];
+            document.querySelectorAll('[data-i18n]').forEach(function (el) {
+                var key = el.getAttribute('data-i18n');
+                if (t[key]) el.textContent = t[key];
+            });
+        }
+
+        window.switchLang = function (newLang) {
+            window._LANG = newLang;
+            applyI18N();
+            try {
+                var win = $('#win');
+                if (win.data('dialog') && win.dialog('isOpen')) {
+                    var names = win.data('srcNames') || [];
+                    win.dialog('setTitle', names.join('+') + i18n[newLang].dialogTitlePfx);
+                    // Update button text without replacing buttons (preserves handlers)
+                    var btns = win.parent().find('.dialog-button a.l-btn');
+                    if (btns.length >= 2) {
+                        $(btns[0]).find('.l-btn-text').text(i18n[newLang].btnOK);
+                        $(btns[1]).find('.l-btn-text').text(i18n[newLang].btnCancel);
+                    }
+                }
+            } catch(e) {}
+            document.querySelectorAll('#lang-switch a').forEach(function (a) {
+                a.classList.toggle('selected', a.getAttribute('data-lang') === newLang);
+            });
+        };
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', applyI18N);
+        } else {
+            applyI18N();
+        }
+    })();
+    </script>
+
+    <!--highlight.js-->
     <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.3.1/styles/base16/darcula.min.css" rel="stylesheet">
     <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.3.1//languages/xml.min.js" type="text/javascript"></script>
@@ -149,15 +218,41 @@
             color: #feffff;
         }
 
-
+        #lang-switch {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+        }
+        #lang-switch a {
+            font-size: 12px;
+            color: #666;
+            text-decoration: none;
+            padding: 2px 6px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        #lang-switch a.selected {
+            background: #40a2de;
+            color: #fff;
+            border-color: #40a2de;
+        }
+        #lang-switch a:hover {
+            background: #d8efff;
+            color: #017bce;
+        }
 
     </style>
 </head>
 <body class="easyui-layout">
     
     <div data-options="region:'west',border:false,split:false" style="width:400px;padding:10px 10px 0;line-height:20px;overflow-x: hidden;overflow-y: auto;">
-        <a href="javascript:void(0)" id="file-sel">选择/拖拽xml文件</a>  <br>
-        <a style="display: none;" href="javascript:void(0)" id="show-src">查看xml文件原文</a>
+        <div id="lang-switch">
+            <a href="javascript:void(0)" data-lang="zh" class="selected" onclick="switchLang('zh')">中文</a>
+            <a href="javascript:void(0)" data-lang="en" onclick="switchLang('en')">EN</a>
+        </div>
+        <a href="javascript:void(0)" id="file-sel" data-i18n="fileSel">选择/拖拽xml文件</a>  <br>
+        <a style="display: none;" href="javascript:void(0)" id="show-src" data-i18n="viewSource">查看xml文件原文</a>
 
         <div id="tree"></div>
     </div>
