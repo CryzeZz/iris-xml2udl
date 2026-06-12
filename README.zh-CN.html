@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>iris xml2udl - 说明文档</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">iris xml2udl - 说明文档</h1>
+</header>
+<h1 id="iris-xml2udl">iris-xml2udl</h1>
+<p><a href="./README.md">English</a></p>
+<p>一款 VS Code 插件，用于解析 <strong>InterSystems IRIS XML
+导出文件</strong>，并以 <strong>UDL（通用定义语言）</strong>
+格式浏览和预览其中的每个组件，支持语法高亮，全程不在磁盘上产生任何临时文件。</p>
+<hr />
+<h2 id="安装">安装</h2>
+<ol type="1">
+<li>打开 VS Code</li>
+<li>进入扩展面板（<code>Ctrl+Shift+X</code>）</li>
+<li>搜索 <strong>iris xml2udl</strong></li>
+<li>点击<strong>安装</strong></li>
+</ol>
+<hr />
+<h2 id="功能特性">功能特性</h2>
+<ul>
+<li><strong>右键菜单预览</strong> — 在资源管理器或编辑器中右键任意
+<code>.xml</code> 文件，选择 <code>iris xml2udl preview</code></li>
+<li><strong>树形视图侧边栏</strong> — 解析结果显示在
+<code>iris xml2udl</code>
+面板中，按顶层类型分组（Class、CSP、Routine、Project 等）</li>
+<li><strong>虚拟文档</strong> — 点击树节点后，UDL
+内容以虚拟文档形式打开（<code>xml2udl-udl://</code>
+协议），不写任何磁盘文件</li>
+<li><strong>自动语法高亮</strong> — 虚拟文档 URI
+中附带文件扩展名（<code>.cls</code>、<code>.csp</code>、<code>.prj</code>、<code>.udl</code>），VS
+Code 自动匹配语言模式</li>
+<li><strong>原生页签行为</strong> —
+单击打开预览页签（下次点击会覆盖），双击或再次点击同一项则固定页签，与
+VS Code 内置资源管理器行为一致</li>
+<li><strong>Project 类型自动设为 XML</strong> — Project
+组件内容自动设置为 XML 语言模式</li>
+</ul>
+<hr />
+<h2 id="支持的组件类型">支持的组件类型</h2>
+<table>
+<thead>
+<tr class="header">
+<th>XML 标签</th>
+<th>文件扩展名</th>
+<th>语言</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Class</td>
+<td><code>.cls</code></td>
+<td>COS / ObjectScript</td>
+</tr>
+<tr class="even">
+<td>Routine</td>
+<td><code>.cls</code></td>
+<td>COS / ObjectScript</td>
+</tr>
+<tr class="odd">
+<td>CSP (.js)</td>
+<td>—</td>
+<td>JavaScript</td>
+</tr>
+<tr class="even">
+<td>CSP（其他）</td>
+<td><code>.csp</code></td>
+<td>HTML</td>
+</tr>
+<tr class="odd">
+<td>Project</td>
+<td>—</td>
+<td>XML</td>
+</tr>
+<tr class="even">
+<td>Projection</td>
+<td><code>.prj</code></td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>UDLText</td>
+<td><code>.udl</code></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="使用方法">使用方法</h2>
+<ol type="1">
+<li>在 VS Code 中打开包含 IRIS XML
+导出文件（<code>.xml</code>）的文件夹或工作区</li>
+<li>在<strong>资源管理器</strong>或<strong>编辑器标题栏</strong>右键任意
+<code>.xml</code> 文件</li>
+<li>选择 <strong><code>iris xml2udl preview</code></strong></li>
+<li><strong><code>iris xml2udl</code></strong>
+侧边栏面板自动打开，展示按类型分组的所有解析组件</li>
+<li>点击任意组件，即可在编辑器中查看其 UDL 内容</li>
+</ol>
+<hr />
+<h2 id="项目结构">项目结构</h2>
+<pre><code>iris-xml2udl/
+├── demo/                        # 基于浏览器的原型（独立 HTML 版本）
+│   ├── xml2Udl.html
+│   └── xml2Udl.js
+└── vscode-extension/            # VS Code 插件
+    ├── src/
+    │   ├── extension.ts         # 入口 — 注册命令、树视图、文档提供者
+    │   ├── xml2UdlEngine.ts     # 核心 XML → UDL 解析引擎（从 demo 移植）
+    │   ├── treeDataProvider.ts  # 按组件类型分组的侧边栏树视图
+    │   └── udlDocumentProvider.ts # 虚拟文档提供者（xml2udl-udl:// 协议）
+    ├── package.json
+    └── tsconfig.json</code></pre>
+<hr />
+<h2 id="环境要求">环境要求</h2>
+<ul>
+<li>VS Code <strong>1.74.0</strong> 及以上</li>
+<li>如需 COS/ObjectScript 语法高亮：请安装 <a
+href="https://marketplace.visualstudio.com/items?itemName=intersystems-community.vscode-objectscript">InterSystems
+ObjectScript 扩展</a></li>
+</ul>
+<hr />
+<h2 id="从源码构建">从源码构建</h2>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> vscode-extension</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> run compile</span></code></pre></div>
+<p>然后在 VS Code 中按 <strong>F5</strong> 启动扩展开发主机。</p>
+<hr />
+<h2 id="许可证">许可证</h2>
+<p><a href="./vscode-extension/LICENSE">MIT</a></p>
+</body>
+</html>
