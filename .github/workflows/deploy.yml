@@ -16,12 +16,15 @@ jobs:
       contents: write
       pages: write
       id-token: write
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Convert README to HTML
         run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq pandoc
           pandoc README.md -s --metadata title="iris xml2udl - README" -o demo/README.html
           pandoc README.zh-CN.md -s --metadata title="iris xml2udl - 说明文档" -o demo/README.zh-CN.html
 
