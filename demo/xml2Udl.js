@@ -1641,9 +1641,9 @@ function readAsDataURL(files) {
 $(function () {
     var srcXml=[],srcXmlName=[],srcXmlHighlight='';
 
-    // i18n helper (safe fallback to Chinese)
+    // i18n helper (safe fallback to English)
     function _t(key) {
-        return (window.I18N && window.I18N[window._LANG] && window.I18N[window._LANG][key]) || (window.I18N && window.I18N['zh'][key]) || key;
+        return (window.I18N && window.I18N[window._LANG] && window.I18N[window._LANG][key]) || (window.I18N && window.I18N['en'][key]) || key;
     }
 
     $('#win').dialog({

@@ -57,46 +57,50 @@
             }
         };
 
-        // Detect browser language
-        var lang = (navigator.language || navigator.userLanguage || 'zh').toLowerCase();
-        lang = lang.startsWith('zh') ? 'zh' : 'en';
+        // Detect language: URL param > default 'en'
+        function detectLang() {
+            var params = new URLSearchParams(window.location.search);
+            var lang = params.get('lang');
+            if (lang === 'zh' || lang === 'en') return lang;
+            return 'en';  // default English
+        }
+
+        var lang = detectLang();
 
         window.I18N = i18n;
         window._LANG = lang;
 
         function applyI18N() {
             var t = i18n[window._LANG];
+            document.documentElement.lang = window._LANG;
             document.querySelectorAll('[data-i18n]').forEach(function (el) {
                 var key = el.getAttribute('data-i18n');
                 if (t[key]) el.textContent = t[key];
             });
         }
 
+        // Switch language by updating URL param and reloading (avoids untranslated dynamic elements)
         window.switchLang = function (newLang) {
-            window._LANG = newLang;
-            applyI18N();
-            try {
-                var win = $('#win');
-                if (win.data('dialog') && win.dialog('isOpen')) {
-                    var names = win.data('srcNames') || [];
-                    win.dialog('setTitle', names.join('+') + i18n[newLang].dialogTitlePfx);
-                    // Update button text without replacing buttons (preserves handlers)
-                    var btns = win.parent().find('.dialog-button a.l-btn');
-                    if (btns.length >= 2) {
-                        $(btns[0]).find('.l-btn-text').text(i18n[newLang].btnOK);
-                        $(btns[1]).find('.l-btn-text').text(i18n[newLang].btnCancel);
-                    }
-                }
-            } catch(e) {}
-            document.querySelectorAll('#lang-switch a').forEach(function (a) {
-                a.classList.toggle('selected', a.getAttribute('data-lang') === newLang);
-            });
+            var url = new URL(window.location.href);
+            url.searchParams.set('lang', newLang);
+            window.location.href = url.toString();
         };
 
+        // Mark the correct lang button as selected after page loads
+        function markLangButton() {
+            document.querySelectorAll('#lang-switch a').forEach(function (a) {
+                a.classList.toggle('selected', a.getAttribute('data-lang') === window._LANG);
+            });
+        }
+
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', applyI18N);
+            document.addEventListener('DOMContentLoaded', function() {
+                applyI18N();
+                markLangButton();
+            });
         } else {
             applyI18N();
+            markLangButton();
         }
     })();
     </script>
