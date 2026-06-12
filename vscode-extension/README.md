@@ -2,6 +2,13 @@
 
 Parse InterSystems IRIS XML export files and preview individual components as UDL (Universal Definition Language) with syntax highlighting right inside VS Code.
 
+## Installation
+
+1. Open VS Code
+2. Go to the Extensions view (`Ctrl+Shift+X`)
+3. Search for **iris xml2udl**
+4. Click **Install**
+
 ## Features
 
 - **Right-click any `.xml` file** and select `iris xml2udl preview` to parse
