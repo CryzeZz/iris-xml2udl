@@ -4,6 +4,8 @@
 
 A VS Code extension that parses **InterSystems IRIS XML export files** and lets you browse and preview each component as **UDL (Universal Definition Language)** with full syntax highlighting — all without creating any temporary files on disk.
 
+> 🚀 **Try it online:** [cryzezz.github.io/iris-xml2udl](https://cryzezz.github.io/iris-xml2udl/) — online demo tool + full documentation
+
 ---
 
 ## Installation
