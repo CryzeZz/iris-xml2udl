@@ -8,7 +8,7 @@ A VS Code extension that parses **InterSystems IRIS XML export files** and lets 
 
 ## Installation
 
-1. Open VS Code
+1. Open VS Code 
 2. Go to the Extensions view (`Ctrl+Shift+X`)
 3. Search for **iris xml2udl**
 4. Click **Install**
