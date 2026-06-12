@@ -4,6 +4,8 @@
 
 一款 VS Code 插件，用于解析 **InterSystems IRIS XML 导出文件**，并以 **UDL（通用定义语言）** 格式浏览和预览其中的每个组件，支持语法高亮，全程不在磁盘上产生任何临时文件。
 
+> 🚀 **在线体验：** [cryzezz.github.io/iris-xml2udl](https://cryzezz.github.io/iris-xml2udl/) — 在线演示工具 + 完整文档
+
 ---
 
 ## 安装
