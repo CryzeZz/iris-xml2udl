@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xml2Udl</title>
+
+    <link rel="stylesheet" type="text/css" href="http://ttykx.com/demos/lib/jquery-easyui-1.7.0/themes/metro/easyui.css"></link>
+    <link rel="stylesheet" type="text/css" href="http://ttykx.com/demos/lib/jquery-easyui-1.7.0/themes/icon.css"></link>
+
+    <script src="http://ttykx.com/demos/lib/jquery-easyui-1.7.0/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="http://ttykx.com/demos/lib/jquery-easyui-1.7.0/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="http://ttykx.com/demos/lib/jquery-easyui-1.7.0/locale/easyui-lang-zh_CN.js"></script>
+
+    <link href="https://cdn.bootcdn.net/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+    <script>
+       (function(){
+         if (typeof window.toastr === 'undefined') {
+          document.write('<link rel="stylesheet" href="http://ttykx.com/demos/lib/toastr-master/build/toastr.min.css">');
+          document.write('<script src="http://ttykx.com/demos/lib/toastr-master/build/toastr.min.js"><\/script>');
+         }
+       })();
+     </script>
+    
+    <script src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+    <script>
+        (function(){
+            if (typeof ClipboardJS === 'undefined') {
+                document.write('<script src="http://ttykx.com/demos/lib/clipboard.js-master/dist/clipboard.min.js" type="text/javascript"><\/script>');
+            }
+        })();
+    </script>
+
+    <!-- i18n: language strings and auto-detection -->
+    <script>
+    (function () {
+        var i18n = {
+            'zh': {
+                fileSel:      '选择/拖拽xml文件',
+                viewSource:   '查看xml文件原文',
+                dialogTitle:  '原文',
+                btnOK:       '确定',
+                btnCancel:    '取消',
+                copySuccess:  '复制成功',
+                dialogTitlePfx: ' - 原文',
+            },
+            'en': {
+                fileSel:      'Select / Drag XML file',
+                viewSource:    'View XML source',
+                dialogTitle:   'Source',
+                btnOK:         'OK',
+                btnCancel:     'Cancel',
+                copySuccess:   'Copied successfully',
+                dialogTitlePfx:' - Source',
+            }
+        };
+
+        // Detect language: URL param > default 'en'
+        function detectLang() {
+            var params = new URLSearchParams(window.location.search);
+            var lang = params.get('lang');
+            if (lang === 'zh' || lang === 'en') return lang;
+            return 'en';  // default English
+        }
+
+        var lang = detectLang();
+
+        window.I18N = i18n;
+        window._LANG = lang;
+
+        function applyI18N() {
+            var t = i18n[window._LANG];
+            document.documentElement.lang = window._LANG;
+            document.querySelectorAll('[data-i18n]').forEach(function (el) {
+                var key = el.getAttribute('data-i18n');
+                if (t[key]) el.textContent = t[key];
+            });
+        }
+
+        // Switch language by updating URL param and reloading (avoids untranslated dynamic elements)
+        window.switchLang = function (newLang) {
+            var url = new URL(window.location.href);
+            url.searchParams.set('lang', newLang);
+            window.location.href = url.toString();
+        };
+
+        // Mark the correct lang button as selected after page loads
+        function markLangButton() {
+            document.querySelectorAll('#lang-switch a').forEach(function (a) {
+                a.classList.toggle('selected', a.getAttribute('data-lang') === window._LANG);
+            });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                applyI18N();
+                markLangButton();
+            });
+        } else {
+            applyI18N();
+            markLangButton();
+        }
+    })();
+    </script>
+
+    <!--highlight.js-->
+    <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.3.1/styles/base16/darcula.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.3.1//languages/xml.min.js" type="text/javascript"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.3.1//languages/javascript.min.js" type="text/javascript"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.3.1//languages/cos.min.js" type="text/javascript"></script>
+    
+    <script>
+        (function(){
+            if (typeof hljs === 'undefined') {
+                document.write('<link href="http://ttykx.com/demos/lib/highlight/styles/base16/darcula.min.css" type="text/css" rel="stylesheet" />');
+                document.write('<script src="http://ttykx.com/demos/lib/highlight/highlight.min.js" type="text/javascript"><\/script>');
+                document.write('<script src="http://ttykx.com/demos/lib/highlight/languages/xml.min.js" type="text/javascript"><\/script>');
+                document.write('<script src="http://ttykx.com/demos/lib/highlight/languages/javascript.min.js" type="text/javascript"><\/script>');
+                document.write('<script src="http://ttykx.com/demos/lib/highlight/languages/cos.min.js" type="text/javascript"><\/script>');
+            }
+        })();
+    </script>
+    <!--
+    <script src="https://cdnjs.cloudflare.com/ajax/libs//highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js" type="application/javascript"></script>
+-->
+    <style>
+        html,body{
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        pre{
+            position: relative;
+        }
+        pre.has-numbering{
+            position: relative;
+        }
+
+        pre.has-numbering.number1 {
+            padding-left: 10px;
+        }
+        pre.has-numbering.number2 {
+            padding-left: 20px;
+        }
+        pre.has-numbering.number3 {
+            padding-left: 30px;
+        }
+        pre.has-numbering.number4 {
+            padding-left: 40px;
+        }
+        pre.has-numbering.number5 {
+            padding-left: 50px;
+        }
+
+        pre.has-numbering code.hljs{
+            padding-left: 8px;
+        }
+
+        .pre-numbering {
+            margin: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 10px;
+            padding: 14px 4px 14px 0;
+            border-right: 1px solid #C3CCD0;
+            text-align: right;
+            font-family: Menlo, monospace;
+            font-size: 0.8em;
+            color: #AAA;
+            list-style-type: none;
+        }
+
+        pre.has-numbering.number1 .pre-numbering{
+            width: 10px;
+        }
+        pre.has-numbering.number2 .pre-numbering{
+            width: 20px;
+        }
+        pre.has-numbering.number3 .pre-numbering{
+            width: 30px;
+        }
+        pre.has-numbering.number4 .pre-numbering{
+            width: 40px;
+        }
+        pre.has-numbering.number5 .pre-numbering{
+            width: 50px;
+        }
+
+        .pre-numbering li{
+            font-size: 12px;
+        }
+
+
+        #btns{
+            padding-top:2px;
+        }
+        #btns a {
+            border-radius: 3px;
+            display: inline-block;
+            height: 22px;
+            line-height: 22px;
+            text-align: center;
+            background: #efefef;
+            color: #666;
+            text-decoration: none;
+            padding: 0 5px;
+        }
+        #btns a:hover {
+            cursor: pointer;
+            background: #d8efff;
+            color: #017bce;
+        }
+        #btns a.selected {
+            background: #40a2de;
+            color: #feffff;
+        }
+
+        #lang-switch {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+        }
+        #lang-switch a {
+            font-size: 12px;
+            color: #666;
+            text-decoration: none;
+            padding: 2px 6px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        #lang-switch a.selected {
+            background: #40a2de;
+            color: #fff;
+            border-color: #40a2de;
+        }
+        #lang-switch a:hover {
+            background: #d8efff;
+            color: #017bce;
+        }
+
+    </style>
+</head>
+<body class="easyui-layout">
+    
+    <div data-options="region:'west',border:false,split:false" style="width:400px;padding:10px 10px 0;line-height:20px;overflow-x: hidden;overflow-y: auto;">
+        <div id="lang-switch">
+            <a href="javascript:void(0)" data-lang="zh" class="selected" onclick="switchLang('zh')">中文</a>
+            <a href="javascript:void(0)" data-lang="en" onclick="switchLang('en')">EN</a>
+        </div>
+        <a href="javascript:void(0)" id="file-sel" data-i18n="fileSel">选择/拖拽xml文件</a>  <br>
+        <a style="display: none;" href="javascript:void(0)" id="show-src" data-i18n="viewSource">查看xml文件原文</a>
+
+        <div id="tree"></div>
+    </div>
+
+    <div data-options="region:'center',border:false,split:false" style="height:50px;padding:10px 10px 10px 5px;line-height:1.8em;overflow: hidden;position: relative;">
+
+        <div id="item-udl-c" style="width: 100%;height: 100%;box-sizing: border-box;overflow: auto;">
+            <pre style="margin: 0;width: 100%;box-sizing: border-box;"><code id="item-udl" style="width: 100%;box-sizing: border-box;" class="hljs"></code></pre>
+        </div>
+        
+        <div id="item-xml-c" style="width: 100%;height: 100%;box-sizing: border-box;display: none;overflow: auto;">
+            <pre style="margin: 0;width: 100%;box-sizing: border-box;"><code id="item-xml" style="width: 100%;box-sizing: border-box;" class="hljs"></code></pre>
+        </div>
+        
+
+        <div style="position: absolute;top: 10px;right: 10px;" id="btns">
+            <a href="javascript:void(0)"  style="margin-right: 10px;" id='btn-udl' class="selected">udl</a>
+            <a href="javascript:void(0)"  style="margin-right: 10px;" id='btn-xml'>xml</a>
+
+            <a href="javascript:void(0)"  style="margin-right: 10px;" id='btn-copy'>copy</a>
+        </div>
+        
+    </div>
+
+    <div id="win" class="easyui-dialog" style="padding: 0px;line-height:1.8em;"><pre style="margin: 0;"><code id="src" style="width: 100%;height: 100%;box-sizing: border-box;" class="hljs"></code></pre></div>
+
+    <input type="file" id="file" style="position:absolute;top:-100px;" multiple="multiple"  accept=".xml"/>
+
+    <script type="text/javascript" src="./xml2Udl.js"></script>
+</body>
+</html>
