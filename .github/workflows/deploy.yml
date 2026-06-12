@@ -22,11 +22,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Convert README to HTML
+      - name: Copy README files
         run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq pandoc
-          pandoc README.md -s --metadata title="iris xml2udl - README" -o demo/README.html
-          pandoc README.zh-CN.md -s --metadata title="iris xml2udl - 说明文档" -o demo/README.zh-CN.html
+          cp README.md demo/
+          cp README.zh-CN.md demo/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
