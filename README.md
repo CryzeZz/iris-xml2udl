@@ -9,7 +9,7 @@ A VS Code extension that parses **InterSystems IRIS XML export files** and lets 
 ## Features
 
 - **Right-click preview** — right-click any `.xml` file in the Explorer or Editor and select `iris xml2udl preview`
-- **Tree view sidebar** — parsed components are listed in the `iris xml2udl` panel, grouped by top-level type (Class, CSP, Routine, Project, …). Each **Class** item can be expanded to reveal its members (Property, Method, Query, Index, Trigger, Storage, XData, etc.)
+- **Tree view sidebar** — parsed components are listed in the `iris xml2udl` panel, grouped by top-level type (Class, CSP, Routine, Project, etc.)
 - **Virtual documents** — clicking a tree item opens its UDL content as a virtual document (`xml2udl-udl://` scheme) — no temp files written to disk
 - **Automatic syntax highlighting** — file extensions are appended to the virtual URI (`.cls`, `.csp`, `.prj`, `.udl`) so VS Code auto-detects the language mode
 - **Native tab behavior** — single-click opens a preview tab (replaced by the next click); double-click or re-clicking the same item pins the tab, matching VS Code's built-in Explorer behavior
