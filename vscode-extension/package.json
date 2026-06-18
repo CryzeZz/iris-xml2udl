@@ -2,7 +2,7 @@
   "name": "xml2udl",
   "displayName": "iris xml2udl",
   "description": "Parse InterSystems IRIS XML export files and preview as UDL (Universal Definition Language) format with syntax highlighting",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publisher": "CryzeZz",
   "repository": {
     "type": "git",
