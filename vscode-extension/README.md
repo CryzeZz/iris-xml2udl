@@ -1,5 +1,7 @@
 # iris xml2udl
 
+[中文说明](./README.zh-CN.md)
+
 Parse InterSystems IRIS XML export files and preview individual components as UDL (Universal Definition Language) with syntax highlighting right inside VS Code.
 
 ## Installation
