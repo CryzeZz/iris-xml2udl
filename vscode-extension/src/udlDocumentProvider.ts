@@ -51,8 +51,10 @@ export function buildUdlUri(itemId: string, itemName: string): vscode.Uri {
 function getFileExtension(tagName: string, itemName: string): string {
     switch (tagName) {
         case 'class':
-        case 'routine':
             return '.cls';
+        case 'routine':
+            // Routine name already includes type extension (e.g., websys.inc)
+            return '';
         case 'csp':
             // If the CSP name already ends with .js, don't add another extension
             if (itemName.endsWith('.js')) {

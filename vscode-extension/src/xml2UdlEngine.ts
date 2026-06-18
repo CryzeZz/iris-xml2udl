@@ -1167,7 +1167,15 @@ function buildTreeFromChildren(fileName: string, children: Element[]): ParsedFil
         }
 
         const childId = tagName + '-' + (typeGroups[tagName].children!.length);
-        const itemName = getAttribute(item, 'name') || '(unnamed)';
+        let itemName = getAttribute(item, 'name') || '(unnamed)';
+
+        // Routine: append type as file extension (e.g., websys + INC → websys.inc)
+        if (tagName === 'routine') {
+            const routineType = getAttribute(item, 'type');
+            if (routineType && routineType !== 'CLS') {
+                itemName = itemName + '.' + routineType.toLowerCase();
+            }
+        }
 
         // Store the XML element as outerHTML for lazy UDL generation
         xmlMap[childId] = item.toString();
