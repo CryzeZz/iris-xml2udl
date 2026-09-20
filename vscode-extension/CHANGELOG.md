@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.3
+
+- Fix: components with the same name coming from different XML files no longer share one virtual document tab — the document identity now includes the source file
+- Fix: re-previewing after editing an XML file refreshes the already-open UDL tab instead of showing stale content
+- Chore: replace the hardcoded Node.js executable path in build scripts with a portable `tsc` invocation
+
 ## 1.0.0
 
 - Initial release
