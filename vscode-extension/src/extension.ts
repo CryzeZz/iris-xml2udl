@@ -14,7 +14,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { parseXmlFile } from './xml2UdlEngine';
 import { Xml2UdlTreeDataProvider } from './treeDataProvider';
-import { registerUdlDocumentProvider, cacheUdlResult, openUdlDocument } from './udlDocumentProvider';
+import { registerUdlDocumentProvider, cacheUdlResult, openUdlDocument, setCurrentSource } from './udlDocumentProvider';
 
 let treeDataProvider: Xml2UdlTreeDataProvider;
 let treeView: vscode.TreeView<any>;
@@ -100,6 +100,11 @@ async function handlePreview(uri?: vscode.Uri): Promise<void> {
         // Read the XML file content
         const xmlContent = fs.readFileSync(fileUri.fsPath, 'utf-8');
         const fileName = path.basename(fileUri.fsPath);
+
+        // Remember which file the tree now represents. Virtual document URIs are
+        // keyed by source file, so a component from a different XML file (even with
+        // the same name) opens as its own document instead of reusing a stale tab.
+        setCurrentSource(fileUri.fsPath);
 
         // Parse the XML and build tree structure
         const parsedFile = parseXmlFile(fileName, xmlContent);
