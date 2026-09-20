@@ -51,9 +51,9 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "C:\\Users\\zhang\\.workbuddy\\binaries\\node\\versions\\22.22.2\\node.exe ./node_modules/typescript/bin/tsc -p ./",
-    "compile": "C:\\Users\\zhang\\.workbuddy\\binaries\\node\\versions\\22.22.2\\node.exe ./node_modules/typescript/bin/tsc -p ./",
-    "watch": "C:\\Users\\zhang\\.workbuddy\\binaries\\node\\versions\\22.22.2\\node.exe ./node_modules/typescript/bin/tsc -watch -p ./"
+    "vscode:prepublish": "tsc -p ./",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
   },
   "devDependencies": {
     "@types/node": "^18.0.0",

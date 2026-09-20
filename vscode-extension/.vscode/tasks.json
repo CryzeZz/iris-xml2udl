@@ -2,18 +2,13 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "type": "shell",
-      "command": "C:\\Users\\zhang\\.workbuddy\\binaries\\node\\versions\\22.22.2\\node.exe",
-      "args": [
-        ".\\node_modules\\typescript\\bin\\tsc",
-        "-p",
-        "./"
-      ],
+      "type": "npm",
+      "script": "compile",
+      "problemMatcher": ["$tsc"],
       "group": {
         "kind": "build",
         "isDefault": true
       },
-      "problemMatcher": ["$tsc"],
       "label": "tsc: compile"
     }
   ]
