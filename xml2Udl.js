@@ -1288,8 +1288,11 @@
 
         text+=getOoDefPropertyText(ooDef,'Method');
 
-        text+=LINE_FEED+'{'+LINE_FEED
-
+        // Implementation 开头若自带换行，"{" 后不再拼接 LINE_FEED，否则仍需拼接
+        text+=LINE_FEED+'{'
+        if(!ooDef.Implementation || !ooDef.Implementation.startsWith(LINE_FEED)){
+            text+=LINE_FEED;
+        }
         text+=ooDef.Implementation||'';
 
         text+='}'+LINE_FEED
@@ -1438,10 +1441,13 @@
 
         text+=getOoDefPropertyText(ooDef,'XData');
 
-        text+=LINE_FEED+'{'+LINE_FEED
-
+        // Data 开头若自带换行，"{" 后不再拼接 LINE_FEED，否则仍需拼接；Data 末尾不再拼接 LINE_FEED
+        text+=LINE_FEED+'{'
+        if(!ooDef.Data || !ooDef.Data.startsWith(LINE_FEED)){
+            text+=LINE_FEED;
+        }
         if(ooDef.Data){
-            text+=ooDef.Data+LINE_FEED;
+            text+=ooDef.Data;
         }
 
         text+='}'+LINE_FEED
