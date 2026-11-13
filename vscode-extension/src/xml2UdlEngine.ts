@@ -790,8 +790,11 @@ function method2Udl(node: Element): UdlResult {
     }
 
     text += getOoDefPropertyText(ooDef, 'Method');
-    // Implementation 内容开头自带换行，"{" 后不再拼接 LINE_FEED 以免多出空行
+    // Implementation 开头若自带换行，"{" 后不再拼接 LINE_FEED，否则仍需拼接
     text += LINE_FEED + '{';
+    if (!ooDef.Implementation || !ooDef.Implementation.startsWith(LINE_FEED)) {
+        text += LINE_FEED;
+    }
     text += ooDef.Implementation || '';
     text += '}' + LINE_FEED;
 
@@ -933,10 +936,13 @@ function xData2Udl(node: Element): UdlResult {
     text += 'XData ' + name;
 
     text += getOoDefPropertyText(ooDef, 'XData');
-    text += LINE_FEED + '{' + LINE_FEED;
-
+    // Data 开头若自带换行，"{" 后不再拼接 LINE_FEED，否则仍需拼接；Data 末尾不再拼接 LINE_FEED
+    text += LINE_FEED + '{';
+    if (!ooDef.Data || !ooDef.Data.startsWith(LINE_FEED)) {
+        text += LINE_FEED;
+    }
     if (ooDef.Data) {
-        text += ooDef.Data + LINE_FEED;
+        text += ooDef.Data;
     }
 
     text += '}' + LINE_FEED;
