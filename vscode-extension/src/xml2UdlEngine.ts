@@ -790,7 +790,8 @@ function method2Udl(node: Element): UdlResult {
     }
 
     text += getOoDefPropertyText(ooDef, 'Method');
-    text += LINE_FEED + '{' + LINE_FEED;
+    // Implementation 内容开头自带换行，"{" 后不再拼接 LINE_FEED 以免多出空行
+    text += LINE_FEED + '{';
     text += ooDef.Implementation || '';
     text += '}' + LINE_FEED;
 

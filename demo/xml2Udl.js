@@ -1288,7 +1288,7 @@
 
         text+=getOoDefPropertyText(ooDef,'Method');
 
-        text+=LINE_FEED+'{'+LINE_FEED
+        text+=LINE_FEED+'{'
 
         text+=ooDef.Implementation||'';
 
